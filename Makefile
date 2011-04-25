@@ -8,7 +8,7 @@ LDFLAGS=-Tlink.ld -nostartfiles
 
 SOURCES=kernel/main.o kernel/boot.o kernel/gpio.o kernel/uart.o kernel/systick.o
 
-SOURCES += lib/atoi.o lib/ctype.o lib/printk.o lib/rand.o lib/sprintf.o lib/string.o lib/strtol.o lib/vsprintf.o
+SOURCES += lib/atoi.o lib/ctype.o lib/printk.o lib/rand.o lib/string.o lib/strtol.o lib/vsprintf.o
 
 CFLAGS += -I./lib/include -nostdlib
 

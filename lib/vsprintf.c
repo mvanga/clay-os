@@ -10,6 +10,8 @@
  */
 
 /* Retrieved from u-boot on 2010-02, changed some stuff (ARub) */
+
+/* minor changes to make it work with Clay (mvanga) */
 #include <stdarg.h>
 #include <clay/types.h>
 #include <clay/string.h>

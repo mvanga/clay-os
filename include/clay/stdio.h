@@ -3,6 +3,9 @@
 
 #include <stdarg.h>
 
+int getc(void);
+char *gets(char *s, int size);
+void putc(int c);
 void puts(char *s);
 int vprintk(const char *fmt, va_list args);
 int printk(const char *fmt, ...);
