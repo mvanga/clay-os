@@ -9,6 +9,7 @@
 #include <clay/uart.h>
 #include <clay/systick.h>
 #include <clay/regs.h>
+#include <clay/jiffies.h>
 
 void cpu_init(void)
 {
@@ -25,7 +26,12 @@ int main(void)
 
 	/* Run the test LED */
 	gpio_set(GPIO_PIN(3, 0), GPIO_ON);
+	delay(1000);
+	gpio_set(GPIO_PIN(3, 1), GPIO_ON);
+	delay(1000);
 	gpio_set(GPIO_PIN(3, 2), GPIO_ON);
+	delay(1000);
+	gpio_set(GPIO_PIN(3, 3), GPIO_ON);
 
 	for (;;);
 }
