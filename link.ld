@@ -11,17 +11,17 @@ SECTIONS
 		*(vectors)
 		*(.text)
 		*(.rodata)
+		__text_end = .;
 	} > rom
 
-	__text_end = .;
-
-	. = 0x10001000;
+	. = 0x10000000;
 
 	.data : {
 		__data_start = .;
 		*(.data)
 		__data_end = .;
 	} > ram AT > rom
+
 	.bss : {
 		__bss_start = .;
 		*(.bss)
