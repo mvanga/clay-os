@@ -78,7 +78,7 @@ void uart_putc(int c)
 	*REG(UART_THR) = c;
 }
 
-int uart_getc(void)
+int __uart_getc(int echo)
 {
 	int c = 0;
 	/* Wait till we have valid data */
@@ -86,6 +86,7 @@ int uart_getc(void)
 	c =  *REG(UART_RBR);
 	if (c == '\r')
 		c = '\n';
-	uart_putc(c);
+	if (echo)
+		uart_putc(c);
 	return c;
 }
