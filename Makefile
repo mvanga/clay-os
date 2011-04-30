@@ -11,11 +11,18 @@ OD=$(CROSS_COMPILE)objdump
 CFLAGS=-mcpu=cortex-m3 -mthumb -Wall -Wextra -I./include -fno-builtin -I./lib/include -nostdlib
 LDFLAGS=-Tlink.ld -nostartfiles
 
+# Core kernel
 obj-y += kernel/main.o kernel/boot.o
+# Library functions
 obj-$(CONFIG_LIB) += lib/atoi.o lib/ctype.o lib/printk.o lib/rand.o lib/string.o lib/strtol.o lib/vsprintf.o
+# Core
+obj-$(CONFIG_CPUINIT) += modules/cpu.o
+# Modules
 obj-$(CONFIG_GPIO) += modules/gpio.o
 obj-$(CONFIG_UART) += modules/uart.o
 obj-$(CONFIG_SYSTICK) += modules/systick.o
+# Tasks
+# None!
 
 all: main.bin checksum
 

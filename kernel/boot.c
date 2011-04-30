@@ -6,6 +6,7 @@
 
 #include <clay/io.h>
 #include <clay/config.h>
+#include <clay/module.h>
 
 /* default handler if unspecified */
 void default_handler(void)
@@ -20,6 +21,28 @@ extern u32 __bss_start;
 extern u32 __bss_end;
 
 extern int main(void);
+
+void do_initcalls(void)
+{
+	initcall_t *call;
+	call = &__init_start;
+	do {
+		(*call)();
+		call++;
+	} while (call < &__init_end);
+}
+
+void do_exitcalls(void)
+{
+	exitcall_t *call;
+	/* Deinitialize in reverse */
+	call = &__exit_end;
+	call--;
+	do {
+		(*call)();
+		call--;
+	} while (call >= &__exit_start);
+}
 
 /* Do all preliminary work before starting the kernel */
 void boot_init(void)
@@ -38,8 +61,12 @@ void boot_init(void)
 	while (dst < &__bss_end)
 		*dst++ = 0;
 	
+	do_initcalls();
+
 	/* Start the kernel */
 	main();
+
+	do_exitcalls();
 }
 
 void irq_undef(void)
