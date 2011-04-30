@@ -1,3 +1,4 @@
+#include <clay/module.h>
 #include <clay/gpio.h>
 #include <clay/io.h>
 #include <clay/types.h>
@@ -9,7 +10,7 @@
 #define GPIO_DIR		0x8000
 #define GPIO_DATA		0x3ffc
 
-void gpio_init(void)
+int gpio_init(void)
 {
 	/* Enable the GPIO clock */
 	*REG(AHBCLKCTRL) |= (1 << 6);
@@ -19,7 +20,15 @@ void gpio_init(void)
 	gpio_dir_port(1, GPIO_OUTPUT);
 	gpio_dir_port(2, GPIO_OUTPUT);
 	gpio_dir_port(3, GPIO_OUTPUT);
+	return 0;
 }
+
+void gpio_exit(void)
+{
+}
+
+module_init(gpio_init);
+module_exit(gpio_exit);
 
 void gpio_dir(int gpio, int dir)
 {

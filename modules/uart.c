@@ -1,3 +1,4 @@
+#include <clay/module.h>
 #include <clay/io.h>
 #include <clay/regs.h>
 #include <clay/types.h>
@@ -22,7 +23,7 @@
 #define UART_DLM 			0x40008004
 #define UART_FDR 			0x40008028
 
-void uart_init(void)
+int uart_init(void)
 {
 	u32 div;
 
@@ -66,7 +67,16 @@ void uart_init(void)
 
 	/* Disable use of UART FIFOs. We can do it ourselves B-) */
 	*REG(UART_FCR) = 0x0;
+	return 0;
 }
+
+void uart_exit(void)
+{
+	return;
+}
+
+module_init(uart_init);
+module_exit(uart_exit);
 
 void uart_putc(int c)
 {

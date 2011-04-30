@@ -10,6 +10,7 @@
 #include <clay/systick.h>
 #include <clay/regs.h>
 #include <clay/jiffies.h>
+#include <clay/module.h>
 
 void cpu_init(void)
 {
@@ -17,21 +18,33 @@ void cpu_init(void)
 	*REG(AHBCLKCTRL) |= (1<<16);
 }
 
+void do_initcalls(void)
+{
+	initcall_t *call;
+	call = &__init_start;
+	do {
+		(*call)();
+		call++;
+	} while (call < &__init_end);
+}
+
+void do_exitcalls(void)
+{
+	exitcall_t *call;
+	/* Deinitialize in reverse */
+	call = &__exit_end;
+	call--;
+	do {
+		(*call)();
+		call--;
+	} while (call >= &__exit_start);
+}
+
 int main(void)
 {
 	cpu_init();
-	gpio_init();
-	uart_init();
-	systick_init();
-
-	/* Run the test LED */
-	gpio_set(GPIO_PIN(3, 0), GPIO_ON);
-	delay(1000);
-	gpio_set(GPIO_PIN(3, 1), GPIO_ON);
-	delay(1000);
-	gpio_set(GPIO_PIN(3, 2), GPIO_ON);
-	delay(1000);
-	gpio_set(GPIO_PIN(3, 3), GPIO_ON);
-
+	do_initcalls();
+	for (;;);
+	do_exitcalls();
 	for (;;);
 }

@@ -42,7 +42,12 @@ void boot_init(void)
 	main();
 }
 
-extern void systick_handler(void);
+void irq_undef(void)
+{
+	return;
+}
+
+void systick_handler(void) __attribute__((weak, alias("irq_undef")));
 
 /*
  * Define the vector table.

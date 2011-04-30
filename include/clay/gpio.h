@@ -12,8 +12,6 @@
 #define GPIO_PORT(n)	(n / 32)
 #define GPIO_BIT(n)		(n % 32)
 
-void gpio_init(void);
-
 void gpio_dir(int gpio, int dir);
 void gpio_set(int gpio, int value);
 int gpio_get(int gpio);

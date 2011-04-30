@@ -8,10 +8,23 @@ SECTIONS
 {
 	.  = 0x0;
 	.text : {
-		*(vectors)
-		*(.text)
-		*(.rodata)
+		*(vectors);
+		*(.text);
+		*(.rodata);
 		__text_end = .;
+	} > rom
+
+	.text.module : {
+		__init_start = .;
+		*(.module0.init);
+		*(.module1.init);
+		*(.module2.init);
+		__init_end = .;
+		__exit_start = .;
+		*(.module0.exit);
+		*(.module1.exit);
+		*(.module2.exit);
+		__exit_end = .;
 	} > rom
 
 	. = 0x10000000;
