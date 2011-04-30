@@ -1,7 +1,7 @@
-CONFIG_LIB=n
-CONFIG_GPIO=n
-CONFIG_UART=n
-CONFIG_SYSTICK=n
+CONFIG_LIB=y
+CONFIG_GPIO=y
+CONFIG_UART=y
+CONFIG_SYSTICK=y
 
 CC=$(CROSS_COMPILE)gcc
 LD=$(CROSS_COMPILE)ld
@@ -16,13 +16,13 @@ obj-y += kernel/main.o kernel/boot.o
 # Library functions
 obj-$(CONFIG_LIB) += lib/atoi.o lib/ctype.o lib/printk.o lib/rand.o lib/string.o lib/strtol.o lib/vsprintf.o
 # Core
-obj-$(CONFIG_CPUINIT) += modules/cpu.o
+obj-$(CONFIG_CPUINIT) += modules/core/cpu.o
 # Modules
-obj-$(CONFIG_GPIO) += modules/gpio.o
-obj-$(CONFIG_UART) += modules/uart.o
-obj-$(CONFIG_SYSTICK) += modules/systick.o
+obj-$(CONFIG_GPIO) += modules/drivers/gpio.o
+obj-$(CONFIG_UART) += modules/drivers/uart.o
+obj-$(CONFIG_SYSTICK) += modules/drivers/systick.o
 # Tasks
-# None!
+obj-y += modules/tasks/task.o
 
 all: main.bin checksum
 
