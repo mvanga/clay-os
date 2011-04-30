@@ -36,7 +36,7 @@ void boot_init(void)
 	/* Zero the bss */
 	dst = &__bss_start;
 	while (dst < &__bss_end)
-		*dst = 0;
+		*dst++ = 0;
 	
 	/* Start the kernel */
 	main();
